@@ -1,7 +1,6 @@
 // parametric-equations/sketch.js
 // Link to example: https://p5js.org/examples/simulate-quicksort.html
 
-
 /* The width of each bar is taken as 8. The array 'states'
 helps in identifying the pivot index at every step, and 
 also the subarray which is being sortedat any given time. */
@@ -12,12 +11,17 @@ let states = [];
 /* The setup() function is called once when the program 
 starts. Here, we fill the array 'values' with random values
 and the array 'states' with a value of -1 for each position. */
- function setup() {
-  createCanvas(windowWidth, windowHeight);
-  for(let i = 0; i < width/8; i++) {
+function setup() {
+  let w = windowWidth - 10;
+  let h = windowHeight - 10;
+
+  createCanvas(w, h);
+
+  for(let i = 0; i < width/6; i++) {
     values.push(random(height));
     states.push(-1);
   }
+
   quickSort(0, values.length - 1);
 }
 
@@ -32,21 +36,34 @@ function windowResized() {
 until the program is stopped. Each statement is executed
 sequentially and after the last line is read, the first
 line is executed again. */
+
 function draw() {
   background(80, 81, 79);
-  for(let i = 0; i < values.length; i++) {
-    // color coding
+  for (let i = 0; i < values.length; i++) {
+    console.log(i);
+
+    // Colors
     if (states[i] == 0) {
-      // color for the bar at the pivot index
-      fill(237, 37, 78);
+
+      // Color for the bar at the pivot index
+      fill(206, 208, 206); // Light gray
+      stroke(255, 255, 255); // White
+
     } else if (states[i] == 1) {
-      // color for the bars being sorted currently
-      fill(239, 39, 166);
+
+      // Color for the bars being sorted currently
+      fill(25, 25, 25); // Eerie black
+      stroke(230, 232, 230); // Platinum
+    
     } else {
-      fill('#3F84E5');
-      stroke(244, 255, 253)
+
+      // Color for the 'sorted'/finished state bars
+      fill(241, 80, 37); // Orange
+      stroke(230, 232, 230); // White
     }
-    rect(i * 8, height - values[i], 8, values[i]);
+    
+    // Draw the rectangular bars
+    rect(i * 6, height - values[i], 6, values[i]);
    }
 }
 
@@ -54,12 +71,14 @@ async function quickSort(start, end) {
   if (start > end) {  // To include the case there's nothing to sort
     return;
   }
+
   /* partition() returns the index of the pivot element.
   Once partition() is executed, all elements to the  
   left of the pivot element are smaller than it and 
   0all elements to its right are larger than it. 
   Then, the original state is restored. */
   let index = await partition(start, end);
+  
   states[index] = -1;
   await Promise.all(
     [quickSort(start, index - 1), 
@@ -73,14 +92,16 @@ the pivot element, but we could've made different
 choices, e.g. take the first element as pivot. */
 async function partition(start, end) {
   for (let i = start; i < end; i++) {
-    // identify the elements being considered currently
+    
+    // Identify the elements being considered currently
     states[i] = 1;
+  
   }
-  // Quicksort algorithm
-  let pivotIndex = start;
-  // make pivot index distinct
-  states[pivotIndex] = 0;
+ 
+  let pivotIndex = start; // Quicksort algorithm
+  states[pivotIndex] = 0; // make pivot index distinct
   let pivotElement = values[end];
+
   for (let i = start; i < end; i++) {
     if (values[i] < pivotElement) {
       await swap(i, pivotIndex);
@@ -89,13 +110,17 @@ async function partition(start, end) {
       states[pivotIndex] = 0;
     }
   }
+
   await swap(end, pivotIndex);
+
   for (let i = start; i < end; i++) {
-    // restore original state
+    
+    // Restore original state
     if (i != pivotIndex) {
       states[i] = -1;
     }
   }
+
   return pivotIndex;
 }
 
