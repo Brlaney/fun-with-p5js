@@ -13,7 +13,7 @@ let states = [];
 starts. Here, we fill the array 'values' with random values
 and the array 'states' with a value of -1 for each position. */
  function setup() {
-  createCanvas(710, 400);
+  createCanvas(windowWidth, windowHeight);
   for(let i = 0; i < width/8; i++) {
     values.push(random(height));
     states.push(-1);
@@ -22,22 +22,29 @@ and the array 'states' with a value of -1 for each position. */
 }
 
 
+// Resize the window (asynchronously)
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+
 /* The statements in draw() function are executed continuously
 until the program is stopped. Each statement is executed
 sequentially and after the last line is read, the first
 line is executed again. */
 function draw() {
-  background(140);
+  background(80, 81, 79);
   for(let i = 0; i < values.length; i++) {
     // color coding
     if (states[i] == 0) {
       // color for the bar at the pivot index
-      fill('#E0777D');
+      fill(237, 37, 78);
     } else if (states[i] == 1) {
       // color for the bars being sorted currently
-      fill('#D6FFB7');
+      fill(239, 39, 166);
     } else {
-      fill(255);
+      fill('#3F84E5');
+      stroke(244, 255, 253)
     }
     rect(i * 8, height - values[i], 8, values[i]);
    }

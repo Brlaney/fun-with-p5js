@@ -1,6 +1,7 @@
 let system;
-let j = 1;
+
 let t = 0.025;
+let j = 1;
 
 // The initial setup function
 function setup() {
