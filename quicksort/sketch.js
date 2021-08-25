@@ -1,4 +1,4 @@
-// parametric-equations/sketch.js
+// Quicksort/sketch.js
 // Link to example: https://p5js.org/examples/simulate-quicksort.html
 
 /* The width of each bar is taken as 8. The array 'states'
